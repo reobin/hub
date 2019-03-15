@@ -1,0 +1,19 @@
+/* This file is for your main application css. */
+
+@import "./phoenix.css";
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#msg-list {
+  min-height:200px; 
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#msg-input {
+  display: flex;
+}
