@@ -2,7 +2,8 @@ defmodule HubWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:lobby", HubWeb.RoomChannel
+  channel "room:lobbyA", HubWeb.RoomChannel
+  channel "room:lobbyB", HubWeb.RoomChannel
   
   transport(:websocket, Phoenix.Transports.WebSocket, timeout: 45_000)
 

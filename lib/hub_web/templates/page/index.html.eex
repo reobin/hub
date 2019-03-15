@@ -1,4 +1,8 @@
 <div class="main-container">
+  <div id="channel-list">
+    <div id="group-a" class="channel-tab no-select selected">channel A</div>
+    <div id="group-b" class="channel-tab no-select">channel B</div>
+  </div>
   <div id="msg-list"></div>
   <div id="msg-input">
     <input type="text" id="name" class="input" placeholder="Name" autofocus>
