@@ -1,9 +1,8 @@
-<!-- The list of messages will appear here: -->
 <div class="main-container">
   <div id="msg-list"></div>
   <div id="msg-input">
-    <input type="text" id="name" class="form-control" placeholder="Your Name" autofocus>
-    <input type="text" id="msg" class="form-control" placeholder="Your Message">
+    <input type="text" id="name" class="input" placeholder="Name" autofocus>
+    <input type="text" id="msg-text" class="input" placeholder="Type your message...">
+    <input type="button" id="send-btn" class="input" value="Send">
   </div>
 </div>
-

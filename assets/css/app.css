@@ -3,17 +3,24 @@
 @import "./phoenix.css";
 
 .main-container {
-  display: flex;
-  flex-direction: column;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  padding: 20px;
 }
 
 #msg-list {
-  min-height:200px; 
+  height: 200px;
   padding: 10px;
   display: flex;
   flex-direction: column;
 }
 
 #msg-input {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% 60% 20%;
+  background-color: #fff;
+}
+
+.input {
+  margin: 0;
 }
