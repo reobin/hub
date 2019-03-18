@@ -11,7 +11,7 @@ defmodule HubWeb.RoomChannelTest do
 
   test "shout broadcasts to room:lobby", %{socket: socket} do
     push(socket, "shout", %{"message" => "hello"})
-    assert_broadcast "shout", %{message: "hello"}
+    assert_broadcast "shout", %{"message" => "hello"}
   end
 
   test "broadcasts are pushed to the client", %{socket: socket} do
