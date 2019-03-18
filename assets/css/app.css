@@ -28,12 +28,6 @@
   margin-bottom: 0;
 }
 
-#msg-text {
-}
-
-#send-btn {
-}
-
 #room-title {
   margin: 0;
 }
@@ -46,13 +40,6 @@
   width: 100%;
   background-color: #f4f4f4;
   display: flex;
-}
-
-#name-input {
-}
-
-#name-btn {
-
 }
 
 .hidden {
