@@ -5,7 +5,7 @@ class Room {
     this.msgContainer = document.getElementById('msg-list');
     this.nameInput = document.getElementById('name');
     this.msgInput = document.getElementById('msg-text');
-    this.btnInput = document.getElementById('send-btn');
+    this.form = document.getElementById('msg-form');
 
     this.channel.join()
       .receive('ok', resp => { console.log('Joined successfully', resp) })
@@ -15,13 +15,10 @@ class Room {
   }
 
   listenForChats() {
-    this.msgInput.addEventListener('keypress', event => {
-      if (event.keyCode == 13) {
-        this.shout();
-      }
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.shout();
     });
-
-    this.btnInput.addEventListener('mouseup', () => this.shout());
 
     this.channel.on('shout', data => {
       const msgDisplay = document.createElement('span');
