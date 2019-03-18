@@ -2,9 +2,8 @@ defmodule HubWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:lobbyA", HubWeb.RoomChannel
-  channel "room:lobbyB", HubWeb.RoomChannel
-  
+  channel "room:*", HubWeb.RoomChannel
+
   transport(:websocket, Phoenix.Transports.WebSocket, timeout: 45_000)
 
   # Socket params are passed from the client and can

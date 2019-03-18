@@ -1,16 +1,12 @@
 defmodule HubWeb.RoomChannel do
   use HubWeb, :channel
 
-  def join("room:" <> group_id, payload, socket) do
+  def join("room:" <> _room_id, _payload, socket) do
     {:ok, socket}
   end
 
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
-  end
-
-  def handle_in("shout", %{"message" => message}, socket) do
-    broadcast!(socket, "shout", %{message: message})
+  def handle_in("shout", payload, socket) do
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 end

@@ -26,30 +26,6 @@
   background-color: #c5c3c3;
 }
 
-#channel-list {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.channel-tab {
-  background-color: #c5c3c3;
-  color: #000;
-  padding: 0 5px;
-  height: 38px;
-  border-radius: 5px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.channel-tab:hover, .channel-tab:focus {
-  background-color: #000 !important;
-  color: #fff !important;
-}
-
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -58,9 +34,4 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
-}
-
-.selected {
-  background-color: #000;
-  color: #fff;
 }

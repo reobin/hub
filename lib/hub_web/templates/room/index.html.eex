@@ -1,0 +1,9 @@
+<div class="main-container">
+  <h1>Chat room : <span id="room-id"><%= @room_id %></span></h1>
+  <div id="msg-list"></div>
+  <div id="msg-input">
+    <input type="text" id="name" class="input" placeholder="Name" autofocus />
+    <input type="text" id="msg-text" class="input" placeholder="Type your message..." />
+    <input type="button" id="send-btn" class="input" value="Send" />
+  </div>
+</div>

@@ -1,12 +1,3 @@
-<div class="main-container">
-  <div id="channel-list">
-    <div id="group-a" class="channel-tab no-select selected">channel A</div>
-    <div id="group-b" class="channel-tab no-select">channel B</div>
-  </div>
-  <div id="msg-list"></div>
-  <div id="msg-input">
-    <input type="text" id="name" class="input" placeholder="Name" autofocus>
-    <input type="text" id="msg-text" class="input" placeholder="Type your message...">
-    <input type="button" id="send-btn" class="input" value="Send">
-  </div>
-</div>
+<h1>Welcome!</h1>
+<a href="/c">Start chatting...</a>
+<p>Or access a chat room by adding its name in the url. Ex. : <a href="/c/example">/c/example</a></p>
