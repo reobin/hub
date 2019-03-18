@@ -1,6 +1,5 @@
 class Room {
   constructor(socket, roomName) {
-    console.log(roomName);
     this.channel = socket.channel(`room:${roomName}`, {});
 
     this.msgContainer = document.getElementById('msg-list');
@@ -30,6 +29,7 @@ class Room {
       const name = data.name || 'guest';
       msgDisplay.innerHTML = '<b>' + name + '</b>: ' + data.message;
       this.msgContainer.appendChild(msgDisplay);
+      this.msgContainer.scrollTop = msgDisplay.offsetTop;
     });
   }
 

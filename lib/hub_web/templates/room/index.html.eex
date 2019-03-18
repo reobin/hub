@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h1>Chat room : <span id="room-id"><%= @room_id %></span></h1>
+  <h1 id="room-title">Chat room : <span id="room-id"><%= @room_id %></span></h1>
   <div id="msg-list"></div>
   <div id="msg-input">
     <input type="text" id="name" class="input" placeholder="Name" autofocus />

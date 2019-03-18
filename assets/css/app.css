@@ -13,12 +13,18 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 #msg-input {
   display: grid;
   grid-template-columns: 20% 60% 20%;
   background-color: #fff;
+  margin-top: 10px;
+}
+
+#room-title {
+  margin: 0;
 }
 
 .input {
