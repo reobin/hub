@@ -2,7 +2,7 @@
 
 @import "./phoenix.css";
 
-* {
+body {
   font-size: 16px;
 }
 
@@ -22,6 +22,7 @@
 
 #msg-form {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   background-color: #fff;
   margin-top: 10px;
@@ -33,13 +34,27 @@
 }
 
 #site-title {
-  font-size: 30px;
+  margin-bottom: 5px;
 }
 
 #name-form {
   width: 100%;
   background-color: #f4f4f4;
   display: flex;
+  flex-wrap: wrap;
+}
+
+#name-input, #msg-text {
+  min-width: 200px;
+  width: 80%;
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+#name-btn, #send-btn {
+  min-width: 120px;
+  width: 20%;
+  flex-grow: 1;
 }
 
 .hidden {
