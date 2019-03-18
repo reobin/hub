@@ -2,7 +2,11 @@
 
 @import "./phoenix.css";
 
-.main-container {
+body {
+  font-size: 16px;
+}
+
+#main-container {
   border-radius: 5px;
   background-color: #f4f4f4;
   padding: 20px;
@@ -17,8 +21,9 @@
 }
 
 #msg-form {
-  display: grid;
-  grid-template-columns: 20% 60% 20%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   background-color: #fff;
   margin-top: 10px;
   margin-bottom: 0;
@@ -29,10 +34,39 @@
 }
 
 #site-title {
-  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+#name-form {
+  width: 100%;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#name-input, #msg-text {
+  min-width: 200px;
+  width: 80%;
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+#name-btn, #send-btn {
+  min-width: 120px;
+  width: 20%;
+  flex-grow: 1;
+}
+
+.hidden {
+  display: none;
 }
 
 .input {
   margin: 0;
   background-color: #c5c3c3;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
 }

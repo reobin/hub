@@ -1,9 +1,15 @@
-<div class="main-container">
-  <h1 id="room-title">Chat room : <span id="room-id"><%= @room_id %></span></h1>
+<div id="main-container" class="hidden">
+  <h3 id="room-title">Chat room : <span id="room-id"><%= @room_id %></span></h3>
   <div id="msg-list"></div>
   <form id="msg-form">
-    <input type="text" id="name" class="input" placeholder="Name" autofocus />
-    <input type="text" id="msg-text" class="input" placeholder="Type your message..." />
-    <input type="submit" class="input" value="Send" />
+    <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />
+    <input type="submit" id="send-btn" class="input" value="Send" />
+  </form>
+</div>
+<div id="name-modal">
+  <span class="title">Please enter your name</span>
+  <form id="name-form">
+      <input type="text" id="name-input" class="input" placeholder="Name" autofocus />
+      <input type="submit" id="name-btn" class="input" value="Confirm" />
   </form>
 </div>

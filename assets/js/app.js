@@ -3,5 +3,7 @@ import "phoenix_html"
 import socket from "./socket"
 import Room from "./room"
 
-const roomName = document.getElementById('room-id').innerText;
-const room = new Room(socket, roomName);
+const roomIdElement = document.getElementById('room-id');
+if (roomIdElement) {
+  const room = new Room(socket, roomIdElement.innerText);
+}
