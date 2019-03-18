@@ -27,6 +27,10 @@
   margin: 0;
 }
 
+#site-title {
+  font-size: 30px;
+}
+
 .input {
   margin: 0;
   background-color: #c5c3c3;
