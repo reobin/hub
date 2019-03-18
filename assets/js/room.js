@@ -21,12 +21,7 @@ class Room {
     });
 
     this.channel.on('shout', data => {
-      const msgDisplay = document.createElement('span');
-      msgDisplay.classList.add('msg');
-      const name = data.name || 'guest';
-      msgDisplay.innerHTML = '<b>' + name + '</b>: ' + data.message;
-      this.msgContainer.appendChild(msgDisplay);
-      this.msgContainer.scrollTop = msgDisplay.offsetTop;
+      this.displayNewMsg(data);
     });
   }
 
@@ -38,6 +33,15 @@ class Room {
       });
       this.msgInput.value = '';
     }
+  }
+
+  displayNewMsg({ name, message }) {
+    const msgDisplay = document.createElement('span');
+    msgDisplay.classList.add('msg');
+    const nameTag = name || 'guest';
+    msgDisplay.innerHTML = '<b>' + nameTag + '</b>: ' + message;
+    this.msgContainer.appendChild(msgDisplay);
+    this.msgContainer.scrollTop = msgDisplay.offsetTop;
   }
 };
 
