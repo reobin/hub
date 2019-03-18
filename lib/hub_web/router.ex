@@ -17,10 +17,8 @@ defmodule HubWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-  end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", HubWeb do
-  #   pipe_through :api
-  # end
+    get "/c", RoomController, :show
+    get "/c/:id", RoomController, :show
+  end
 end
