@@ -2,7 +2,11 @@
 
 @import "./phoenix.css";
 
-.main-container {
+* {
+  font-size: 16px;
+}
+
+#main-container {
   border-radius: 5px;
   background-color: #f4f4f4;
   padding: 20px;
@@ -17,11 +21,17 @@
 }
 
 #msg-form {
-  display: grid;
-  grid-template-columns: 20% 60% 20%;
+  display: flex;
+  width: 100%;
   background-color: #fff;
   margin-top: 10px;
   margin-bottom: 0;
+}
+
+#msg-text {
+}
+
+#send-btn {
 }
 
 #room-title {
@@ -32,7 +42,29 @@
   font-size: 30px;
 }
 
+#name-form {
+  width: 100%;
+  background-color: #f4f4f4;
+  display: flex;
+}
+
+#name-input {
+}
+
+#name-btn {
+
+}
+
+.hidden {
+  display: none;
+}
+
 .input {
   margin: 0;
   background-color: #c5c3c3;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 20px;
 }

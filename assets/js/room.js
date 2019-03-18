@@ -1,11 +1,15 @@
 class Room {
   constructor(socket, roomName) {
-    this.channel = socket.channel(`room:${roomName}`, {});
-
+    this.mainContainer = document.getElementById('main-container');
+    this.nameModal = document.getElementById('name-modal');
+    this.nameInput = document.getElementById('name-input');
     this.msgContainer = document.getElementById('msg-list');
-    this.nameInput = document.getElementById('name');
     this.msgInput = document.getElementById('msg-text');
-    this.form = document.getElementById('msg-form');
+    this.msgForm = document.getElementById('msg-form');
+
+    this.listenForName();
+
+    this.channel = socket.channel(`room:${roomName}`, {});
 
     this.channel.join()
       .receive('ok', resp => { console.log('Joined successfully', resp) })
@@ -14,8 +18,19 @@ class Room {
     this.listenForChats();
   }
 
+  listenForName() {
+    document.getElementById('name-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (this.nameInput.value) {
+        this.mainContainer.classList.remove('hidden');
+        this.nameModal.classList.add('hidden');
+        this.msgInput.focus();
+      }
+    })
+  }
+
   listenForChats() {
-    this.form.addEventListener('submit', (e) => {
+    this.msgForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this.shout();
     });
