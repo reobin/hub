@@ -1,6 +1,10 @@
 <div id="main-container" class="hidden">
-  <h3 id="room-title">Chat room : <span id="room-id"><%= @room_id %></span></h3>
-  <div id="msg-list"></div>
+  <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
+  <div id="msg-list">
+    <%= for message <- @messages do %>
+      <span><b><%= message.name %>: </b><%= message.body %></span>
+    <% end %>
+  </div>
   <form id="msg-form">
     <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />
     <input type="submit" id="send-btn" class="input" value="Send" />
