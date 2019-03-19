@@ -44,7 +44,8 @@ class Room {
     if (this.msgInput.value.length > 0) {
       this.channel.push('shout', {
         name: this.nameInput.value,
-        body: this.msgInput.value
+        body: this.msgInput.value,
+        channel: document.getElementById('room-id').innerText
       });
       this.msgInput.value = '';
     }
