@@ -44,17 +44,17 @@ class Room {
     if (this.msgInput.value.length > 0) {
       this.channel.push('shout', {
         name: this.nameInput.value,
-        message: this.msgInput.value
+        body: this.msgInput.value
       });
       this.msgInput.value = '';
     }
   }
 
-  displayNewMsg({ name, message }) {
+  displayNewMsg({ name, body }) {
     const msgDisplay = document.createElement('span');
     msgDisplay.classList.add('msg');
     const nameTag = name || 'guest';
-    msgDisplay.innerHTML = '<b>' + nameTag + '</b>: ' + message;
+    msgDisplay.innerHTML = '<b>' + nameTag + '</b>: ' + body;
     this.msgContainer.appendChild(msgDisplay);
     this.msgContainer.scrollTop = msgDisplay.offsetTop;
   }
