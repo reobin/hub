@@ -6,7 +6,6 @@ defmodule HubWeb.RoomChannel do
   end
 
   def handle_in("shout", payload, socket) do
-    # TODO make async
     Hub.Chats.create_message(payload)
     broadcast(socket, "shout", payload)
     {:noreply, socket}
