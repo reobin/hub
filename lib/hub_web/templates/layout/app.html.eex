@@ -10,6 +10,14 @@
   <body>
     <header>
       <section class="container">
+        <div>
+          <%= if signed_in?(@conn) do %>
+            <%= link "Sign out", to: Routes.session_path(@conn, :delete), method: :delete %>
+          <% else %>
+            <%= link "Sign in", to: Routes.session_path(@conn, :new), method: :get %> |
+            <%= link "Sign up", to: Routes.user_path(@conn, :new) %>
+          <% end %>
+        </div>
         <h2 id="site-title"><a href="/">Hub</a></h2>
       </section>
     </header>

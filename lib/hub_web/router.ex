@@ -20,5 +20,11 @@ defmodule HubWeb.Router do
 
     get "/c", RoomController, :show
     get "/c/:id", RoomController, :show
+
+    resources "/registrations", UserController, only: [:create, :new]
+
+    get "/sign-in", SessionController, :new
+    post "/sign-in", SessionController, :create
+    delete "/sign-out", SessionController, :delete
   end
 end

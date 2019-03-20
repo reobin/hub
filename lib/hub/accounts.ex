@@ -27,6 +27,17 @@ defmodule Hub.Accounts do
   end
 
   @doc """
+  Gets a user by its username
+  """
+  def get_by_username(username) when is_nil(username) do
+    nil
+  end
+
+  def get_by_username(username) do
+    Repo.get_by(User, username: username)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples
