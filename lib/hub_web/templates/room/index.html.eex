@@ -1,4 +1,4 @@
-<div id="main-container" class="hidden">
+<div id="main-container" class="main-container hidden">
   <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
   <div id="msg-list">
     <%= for message <- @messages do %>

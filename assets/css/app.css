@@ -1,19 +1,35 @@
 /* This file is for your main application css. */
-
+@import "./reset.css";
 @import "./phoenix.css";
 
-body {
+html, body {
+  height: 100%;
   font-size: 16px;
 }
 
-#main-container {
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main { 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.main-container {
   border-radius: 5px;
   background-color: #f4f4f4;
   padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #msg-list {
-  height: 200px;
+  height: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -22,7 +38,6 @@ body {
 
 #msg-form {
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
   background-color: #fff;
   margin-top: 10px;
@@ -45,13 +60,12 @@ body {
 }
 
 #name-input, #msg-text {
-  min-width: 200px;
   width: 80%;
   flex-grow: 1;
   font-size: 16px;
 }
 
-#name-btn, #send-btn {
+#name-btn {
   min-width: 120px;
   width: 20%;
   flex-grow: 1;
