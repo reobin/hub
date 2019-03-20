@@ -59,13 +59,21 @@ body {
 
 .message-row {
   display: flex;
+  flex-shrink: 0;
 }
 
 .message-row > b {
-  width: 5em;
+  flex-basis: 5em;
+  flex-shrink: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.message-row > span {
+  width: calc(100% - 5em);
+  padding-right: 1em;
+  word-wrap: break-word;
 }
 
 .hidden {
