@@ -2,7 +2,10 @@
   <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
   <div id="msg-list">
     <%= for message <- @messages do %>
-      <span><b><%= message.name %>: </b><%= message.body %></span>
+      <div class="message-row">
+        <b><%= message.name %></b>
+        <span><%= message.body %></span>
+      </div>
     <% end %>
   </div>
   <form id="msg-form">

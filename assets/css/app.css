@@ -57,6 +57,17 @@ body {
   flex-grow: 1;
 }
 
+.message-row {
+  display: flex;
+}
+
+.message-row > b {
+  width: 5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .hidden {
   display: none;
 }
