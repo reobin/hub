@@ -4,6 +4,11 @@ defmodule Hub.Application do
   @moduledoc false
 
   use Application
+  use Supervisor
+
+  def init(stack) do
+    {:ok, stack}
+  end
 
   def start(_type, _args) do
     # List all child processes to be supervised
@@ -11,9 +16,10 @@ defmodule Hub.Application do
       # Start the Ecto repository
       Hub.Repo,
       # Start the endpoint when the application starts
-      HubWeb.Endpoint
+      HubWeb.Endpoint,
       # Starts a worker by calling: Hub.Worker.start_link(arg)
       # {Hub.Worker, arg},
+      worker(Hub.Periodically, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
