@@ -42,6 +42,8 @@ defmodule HubWeb do
       import HubWeb.ErrorHelpers
       import HubWeb.Gettext
       alias HubWeb.Router.Helpers, as: Routes
+
+      import HubWeb.Helpers.Auth
     end
   end
 

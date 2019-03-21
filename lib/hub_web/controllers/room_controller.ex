@@ -13,6 +13,11 @@ defmodule HubWeb.RoomController do
 
   defp render_room(conn, room_name) do
     messages = Hub.Chats.list_messages_from_room(room_name)
-    render(conn, "index.html", %{room_name: room_name, messages: messages})
+
+    render(conn, "index.html", %{
+      room_name: room_name,
+      messages: messages,
+      sign_in_module: HubWeb.SessionView
+    })
   end
 end

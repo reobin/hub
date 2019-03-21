@@ -1,0 +1,13 @@
+<%= form_for @conn, Routes.session_path(@conn, :new, room_name: @room_name), [as: :session], fn f -> %>
+  <%= if @error != "" do %>
+    <div class="alert alert-danger">
+      <p><%= @error %></p>
+    </div>
+  <% end %>
+  <%= if @room_name != "" do %>
+    <span>Connecting to ... /c/<%= @room_name || "lobby" %></span>
+  <% end %>
+  <%= label f, :username %>
+  <%= text_input f, :username, placeholder: "Name" %>
+  <%= submit "Go" %>
+<% end %>
