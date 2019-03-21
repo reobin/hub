@@ -1,13 +1,18 @@
 <%= if signed_in?(@conn) do %>
   <div id="main-container" class="main-container">
-    <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
-    <div id="msg-list">
-      <%= for message <- @messages do %>
-        <div class="message-row">
-          <b><%= message.name %></b>
-          <span><%= message.body %></span>
-        </div>
-      <% end %>
+    <b id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></b>
+    <div class="chat-container">
+      <div id="msg-list">
+        <%= for message <- @messages do %>
+          <div class="message-row">
+            <b><%= message.name %></b>
+            <span><%= message.body %></span>
+          </div>
+        <% end %>
+      </div>
+      <div class="online-user-list">
+        <b>Online users :</b>
+      </div>
     </div>
     <form id="msg-form">
       <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />

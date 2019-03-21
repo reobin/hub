@@ -37,13 +37,11 @@ class Room {
   }
 
   displayNewMsg({ name, body }) {
-    const msgDisplay = document.createElement('span');
-    msgDisplay.classList.add('msg');
+    const msgDisplay = document.createElement('div');
+    msgDisplay.classList.add('message-row');
     msgDisplay.innerHTML = `
-      <div class="message-row" >
-        <b>${name}</b>
-        <span>${body}</span>
-      </div>`;
+    <b>${name}</b>
+    <span>${body}</span>`;
     this.msgContainer.appendChild(msgDisplay);
     this.msgContainer.scrollTop = msgDisplay.offsetTop;
   }
