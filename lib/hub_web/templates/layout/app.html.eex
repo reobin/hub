@@ -15,16 +15,13 @@
             <span id="user-name"><%= current_user(@conn).username %></span> |
             <%= link "Sign out", to: Routes.session_path(@conn, :delete), method: :delete %>
           <% else %>
-            <%= link "Sign in", to: Routes.session_path(@conn, :new), method: :get %> |
-            <%= link "Sign up", to: Routes.user_path(@conn, :new) %>
+            <%= link "Sign in", to: Routes.session_path(@conn, :new), method: :get %>
           <% end %>
         </div>
         <h2 id="site-title"><a href="/">Hub</a></h2>
       </section>
     </header>
     <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
