@@ -12,6 +12,7 @@
       <section class="container">
         <div>
           <%= if signed_in?(@conn) do %>
+            <span id="user-name"><%= current_user(@conn).username %></span> |
             <%= link "Sign out", to: Routes.session_path(@conn, :delete), method: :delete %>
           <% else %>
             <%= link "Sign in", to: Routes.session_path(@conn, :new), method: :get %> |

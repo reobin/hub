@@ -1,22 +1,20 @@
-<div id="main-container" class="main-container hidden">
-  <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
-  <div id="msg-list">
-    <%= for message <- @messages do %>
-      <div class="message-row">
-        <b><%= message.name %></b>
-        <span><%= message.body %></span>
-      </div>
-    <% end %>
+
+<%= if signed_in?(@conn) do %>
+  <div id="main-container" class="main-container">
+    <h3 id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></h3>
+    <div id="msg-list">
+      <%= for message <- @messages do %>
+        <div class="message-row">
+          <b><%= message.name %></b>
+          <span><%= message.body %></span>
+        </div>
+      <% end %>
+    </div>
+    <form id="msg-form">
+      <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />
+      <input type="submit" id="send-btn" class="input" value="Send" />
+    </form>
   </div>
-  <form id="msg-form">
-    <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />
-    <input type="submit" id="send-btn" class="input" value="Send" />
-  </form>
-</div>
-<div id="name-modal">
-  <span class="title">Please enter your name</span>
-  <form id="name-form">
-      <input type="text" id="name-input" class="input" placeholder="Name" autofocus />
-      <input type="submit" id="name-btn" class="input" value="Confirm" />
-  </form>
-</div>
+<% else %>
+  <p>please sign in</p>
+<% end %>

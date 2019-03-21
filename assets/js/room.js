@@ -1,13 +1,9 @@
 class Room {
   constructor(socket, roomName) {
     this.mainContainer = document.getElementById('main-container');
-    this.nameModal = document.getElementById('name-modal');
-    this.nameInput = document.getElementById('name-input');
     this.msgContainer = document.getElementById('msg-list');
     this.msgInput = document.getElementById('msg-text');
     this.msgForm = document.getElementById('msg-form');
-
-    this.listenForName();
 
     this.channel = socket.channel(`room:${roomName}`, {});
 
@@ -16,17 +12,6 @@ class Room {
       .receive('error', resp => { console.log('Unable to join', resp) });
 
     this.listenForChats();
-  }
-
-  listenForName() {
-    document.getElementById('name-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (this.nameInput.value) {
-        this.mainContainer.classList.remove('hidden');
-        this.nameModal.classList.add('hidden');
-        this.msgInput.focus();
-      }
-    })
   }
 
   listenForChats() {
@@ -43,7 +28,7 @@ class Room {
   shout() {
     if (this.msgInput.value.length > 0) {
       this.channel.push('shout', {
-        name: this.nameInput.value,
+        name: document.getElementById('user-name').innerText,
         body: this.msgInput.value,
         channel: document.getElementById('room-id').innerText
       });

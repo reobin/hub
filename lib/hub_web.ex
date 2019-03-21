@@ -43,7 +43,7 @@ defmodule HubWeb do
       import HubWeb.Gettext
       alias HubWeb.Router.Helpers, as: Routes
 
-      import HubWeb.Helpers.Auth, only: [signed_in?: 1]
+      import HubWeb.Helpers.Auth
     end
   end
 
