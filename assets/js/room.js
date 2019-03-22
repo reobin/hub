@@ -10,12 +10,13 @@ class Room {
     this.channel = socket.channel(`room:${roomName}`, {
       username: document.getElementById("user-name").innerText
     });
+
     let presence = new Presence(this.channel);
-    this.userTyping = false;
-
     socket.connect();
-
     presence.onSync(() => this.renderOnlineUsers(presence));
+
+    this.userTyping = false;
+    this.userTypingTimer;
 
     this.channel
       .join()
@@ -50,7 +51,7 @@ class Room {
   }
 
   userStopsTyping() {
-    if (!this.userTyping) return;
+    clearTimeout(this.typingTimer);
     this.userTyping = false;
     this.channel.push("user:typing", {
       typing: this.userTyping,
@@ -61,16 +62,17 @@ class Room {
   listenForChats() {
     this.msgInput.addEventListener("keydown", () => {
       this.userStartsTyping();
+      clearTimeout(this.typingTimer);
     });
 
     this.msgInput.addEventListener("keyup", () => {
-      if (!this.msgInput.value) {
-        this.userStopsTyping();
-      }
+      clearTimeout(this.typingTimer);
+      this.typingTimer = setTimeout(this.userStopsTyping.bind(this), 2000);
     });
 
     this.msgForm.addEventListener("submit", e => {
       e.preventDefault();
+      this.userStopsTyping();
       this.shout();
     });
 
