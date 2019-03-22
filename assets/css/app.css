@@ -2,7 +2,8 @@
 @import "./reset.css";
 @import "./phoenix.css";
 
-html, body {
+html,
+body {
   height: 100%;
   font-size: 16px;
 }
@@ -12,7 +13,7 @@ body {
   flex-direction: column;
 }
 
-main { 
+main {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -85,7 +86,8 @@ main {
   flex-wrap: wrap;
 }
 
-#name-input, #msg-text {
+#name-input,
+#msg-text {
   width: 80%;
   flex-grow: 1;
   font-size: 16px;

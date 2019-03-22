@@ -1,4 +1,4 @@
-image: elixir:1.8.1-alpine
+image: bitwalker/alpine-elixir-phoenix:1.8.1
 
 services:
   - postgres:latest
@@ -18,7 +18,9 @@ before_script:
   - mix deps.get --only test
   - mix ecto.create
   - mix ecto.migrate
+  - cd assets && npm install
 
 mix:
   script:
-  - mix test
+    - npm run test && cd -
+    - mix test
