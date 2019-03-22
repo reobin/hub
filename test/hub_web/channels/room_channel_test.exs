@@ -4,7 +4,7 @@ defmodule HubWeb.RoomChannelTest do
   setup do
     {:ok, _, socket} =
       socket(HubWeb.UserSocket, "user_id", %{some: :assign})
-      |> subscribe_and_join(HubWeb.RoomChannel, "room:lobby")
+      |> subscribe_and_join(HubWeb.RoomChannel, "room:lobby", %{"username" => "guest"})
 
     {:ok, socket: socket}
   end

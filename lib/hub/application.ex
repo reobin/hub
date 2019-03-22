@@ -17,6 +17,8 @@ defmodule Hub.Application do
       Hub.Repo,
       # Start the endpoint when the application starts
       HubWeb.Endpoint,
+      # Presence
+      HubWeb.Presence,
       # Starts a worker by calling: Hub.Worker.start_link(arg)
       # {Hub.Worker, arg},
       worker(Hub.Periodically, [])

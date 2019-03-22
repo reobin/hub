@@ -12,6 +12,8 @@
       </div>
       <div class="online-user-list">
         <b>Online users :</b>
+        <ul id="js-userList-container">
+        </ul>
       </div>
     </div>
     <form id="msg-form">

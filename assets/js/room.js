@@ -1,3 +1,5 @@
+import { Presence } from "phoenix"
+
 class Room {
   constructor(socket, roomName) {
     this.mainContainer = document.getElementById('main-container');
@@ -5,13 +7,23 @@ class Room {
     this.msgInput = document.getElementById('msg-text');
     this.msgForm = document.getElementById('msg-form');
 
-    this.channel = socket.channel(`room:${roomName}`, {});
+    this.channel = socket.channel(`room:${roomName}`, { username: document.getElementById("user-name").innerText });
+    let presence = new Presence(this.channel)
+
+    socket.connect()
+
+    presence.onSync(() => this.renderOnlineUsers(presence))
 
     this.channel.join()
       .receive('ok', resp => { console.log('Joined successfully', resp) })
       .receive('error', resp => { console.log('Unable to join', resp) });
 
     this.listenForChats();
+  }
+
+  renderOnlineUsers(presence) {
+    const response = Object.keys(presence.state).map(p => `<li>${p}</li>`)
+    document.querySelector("#js-userList-container").innerHTML = response.join("")
   }
 
   listenForChats() {
