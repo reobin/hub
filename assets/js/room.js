@@ -8,11 +8,12 @@ class Room {
     this.msgForm = document.getElementById('msg-form');
 
     this.channel = socket.channel(`room:${roomName}`, { username: document.getElementById("user-name").innerText });
-    let presence = new Presence(this.channel)
+    let presence = new Presence(this.channel);
+    this.userTyping = false;
 
-    socket.connect()
+    socket.connect();
 
-    presence.onSync(() => this.renderOnlineUsers(presence))
+    presence.onSync(() => this.renderOnlineUsers(presence));
 
     this.channel.join()
       .receive('ok', resp => { console.log('Joined successfully', resp) })
@@ -22,11 +23,37 @@ class Room {
   }
 
   renderOnlineUsers(presence) {
-    const response = Object.keys(presence.state).map(p => `<li>${p}</li>`)
-    document.querySelector("#js-userList-container").innerHTML = response.join("")
+    const response = []
+    presence.list((id, { metas: [user, ...rest] }) => {
+      const typingIndicator = user.typing ? '<b>typing</b>' : '';
+      response.push(`<li>${user.username} ${typingIndicator}</li>`);
+    });
+    document.querySelector("#js-userList-container").innerHTML = response.join("");
+  }
+
+  userStartsTyping() {
+    if (this.userTyping) return;
+    this.userTyping = true;
+    this.channel.push('user:typing', { typing: this.userTyping, username: document.getElementById("user-name").innerText });
+  }
+
+  userStopsTyping() {
+    if (!this.userTyping) return;
+    this.userTyping = false;
+    this.channel.push('user:typing', { typing: this.userTyping, username: document.getElementById("user-name").innerText });
   }
 
   listenForChats() {
+    this.msgInput.addEventListener('keydown', () => {
+      this.userStartsTyping();
+    })
+
+    this.msgInput.addEventListener('keyup', () => {
+      if (!this.msgInput.value) {
+        this.userStopsTyping();
+      }
+    })
+
     this.msgForm.addEventListener('submit', (e) => {
       e.preventDefault();
       this.shout();
