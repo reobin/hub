@@ -17,7 +17,7 @@
       </div>
     </div>
     <form id="msg-form">
-      <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus />
+      <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus autocomplete="off" />
       <input type="submit" id="send-btn" class="input" value="Send" />
     </form>
   </div>
