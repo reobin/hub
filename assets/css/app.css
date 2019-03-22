@@ -100,10 +100,14 @@ main {
 .message-row {
   display: flex;
   flex-shrink: 0;
-  background-color: #f4f4f4;
+  background-color: #fff;
   margin: 0.2em 0;
   padding: 0.5em;
   border-radius: 0.5em;
+}
+
+.message-row:hover {
+  background-color: #f4f4f4;
 }
 
 .message-row > b {
