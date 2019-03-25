@@ -44,6 +44,7 @@ defmodule HubWeb do
       alias HubWeb.Router.Helpers, as: Routes
 
       import HubWeb.Helpers.Auth
+      import ReactPhoenix.ClientSide
     end
   end
 
