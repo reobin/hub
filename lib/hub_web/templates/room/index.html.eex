@@ -1,6 +1,6 @@
 <%= if signed_in?(@conn) do %>
    <div id="main-container" class="main-container"/>
-    <%= react_component("Components.Chat", %{userName: current_user(@conn).username, roomName: @room_name}, target_id: "main-container") %>
+    <%= react_component("Components.Chat", %{userName: current_user(@conn).username, roomName: @room_name, messages: @messages}, target_id: "main-container") %>
 <% else %>
   <%= render @sign_in_module, "new.html", %{error: "", conn: @conn, room_name: @room_name} %>
 <% end %>

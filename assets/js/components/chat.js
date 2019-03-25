@@ -1,9 +1,9 @@
 import React from "react";
-import socket from "../socket";
-import { Presence } from "phoenix";
+import { Socket, Presence } from "phoenix";
 
 class Chat extends React.Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
       userName: this.props.userName,
@@ -11,12 +11,14 @@ class Chat extends React.Component {
       userTyping: false,
       userTypingTimer: {},
       inputMessage: "",
-      messages: [],
+      messages: this.props.messages,
       onlineUsers: []
     };
   }
+
   componentDidMount() {
-    console.log(socket);
+    const socket = new Socket("/socket", {});
+
     this.channel = socket.channel(`room:${this.state.roomName}`, {
       username: this.state.userName
     });
@@ -43,7 +45,6 @@ class Chat extends React.Component {
   }
 
   renderOnlineUsers(presence) {
-    console.log(presence);
     const response = [];
     presence.list((id, { metas: [user, ...rest] }) => {
       response.push({ username: user.username, typing: user.typing });
@@ -59,9 +60,15 @@ class Chat extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ userTyping: false });
+    this.channel.push("user:typing", {
+      typing: false,
+      username: this.state.userName
+    });
     this.channel.push("shout", {
       name: this.state.userName,
-      body: this.state.inputMessage
+      body: this.state.inputMessage,
+      channel: this.state.roomName
     });
     this.setState({
       inputMessage: ""
@@ -70,7 +77,6 @@ class Chat extends React.Component {
 
   userStartsTyping() {
     if (this.state.userTyping) return;
-    console.log("sending message");
     this.setState({ userTyping: true });
     this.channel.push("user:typing", {
       typing: true,
