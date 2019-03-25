@@ -5,7 +5,7 @@ import "react-phoenix";
 import socket from "./socket";
 import Room from "./room";
 
-const roomIdElement = document.getElementById("room-id");
-if (roomIdElement) {
-  const room = new Room(socket, roomIdElement.innerText);
-}
+import Chat from "./components/chat";
+window.Components = {
+  Chat
+};

@@ -1,26 +1,6 @@
 <%= if signed_in?(@conn) do %>
-  <div id="main-container" class="main-container">
-    <b id="room-title">Chat room : <span id="room-id"><%= @room_name %></span></b>
-    <div class="chat-container">
-      <div id="msg-list">
-        <%= for message <- @messages do %>
-          <div class="message-row">
-            <b><%= message.name %></b>
-            <span><%= message.body %></span>
-          </div>
-        <% end %>
-      </div>
-      <div class="online-user-list">
-        <b>Online users :</b>
-        <ul id="js-userList-container">
-        </ul>
-      </div>
-    </div>
-    <form id="msg-form">
-      <input type="text" id="msg-text" class="input" placeholder="Type your message..." autofocus autocomplete="off" />
-      <input type="submit" id="send-btn" class="input" value="Send" />
-    </form>
-  </div>
+   <div id="main-container" class="main-container"/>
+    <%= react_component("Components.Chat", %{userName: current_user(@conn).username, roomName: @room_name}, target_id: "main-container") %>
 <% else %>
   <%= render @sign_in_module, "new.html", %{error: "", conn: @conn, room_name: @room_name} %>
 <% end %>
