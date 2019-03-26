@@ -53,7 +53,7 @@ main {
   margin: 0;
 }
 
-#msg-list {
+.msg-list {
   height: 100%;
   width: 80%;
   padding: 10px;
@@ -62,7 +62,7 @@ main {
   overflow-y: auto;
 }
 
-#msg-form {
+.msg-form {
   display: flex;
   width: 100%;
   background-color: #fff;
@@ -70,7 +70,7 @@ main {
   margin-bottom: 0;
 }
 
-#room-title {
+.room-title {
   margin: 0;
   font-size: 20px;
 }
@@ -87,7 +87,7 @@ main {
 }
 
 #name-input,
-#msg-text {
+.msg-text {
   width: 80%;
   flex-grow: 1;
   font-size: 16px;

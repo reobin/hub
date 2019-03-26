@@ -1,149 +1,114 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Socket, Presence } from "phoenix";
+import MessageForm from "./messages/messageForm";
+import MessageList from "./messages/messageList";
+import OnlineUserList from "./onlineUsers/onlineUserList";
+import RoomLabel from "./roomLabel";
 
-class Chat extends React.Component {
-  constructor(props) {
-    console.log(props);
-    super(props);
-    this.state = {
-      userName: this.props.userName,
-      roomName: this.props.roomName,
-      userTyping: false,
-      userTypingTimer: {},
-      inputMessage: "",
-      messages: this.props.messages,
-      onlineUsers: []
+const Chat = ({ userName, roomName, messages: messagesProp }) => {
+  const [userTyping, setUserTyping] = useState(false);
+  const [userTypingTimer, setTypingTimer] = useState({});
+  const [messages, setMessages] = useState(messagesProp);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [channel, setChannel] = useState({});
+
+  useEffect(() => {
+    const setupChannel = async () => {
+      const socket = new Socket("/socket", {});
+
+      const socketChannel = socket.channel(`room:${roomName}`, {
+        username: userName
+      });
+
+      const presence = new Presence(socketChannel);
+      socket.connect();
+      presence.onSync(() => {
+        renderOnlineUsers(presence);
+      });
+
+      socketChannel
+        .join()
+        .receive("ok", response => {
+          console.log("Joined successfully", response);
+        })
+        .receive("error", resp => {
+          console.log("Unable to join", resp);
+        });
+      socketChannel.on("shout", payload => {
+        setMessages(messages.concat(payload));
+      });
+      setChannel(socketChannel);
     };
-  }
 
-  componentDidMount() {
-    const socket = new Socket("/socket", {});
+    setupChannel();
+  }, []);
 
-    this.channel = socket.channel(`room:${this.state.roomName}`, {
-      username: this.state.userName
-    });
-
-    const presence = new Presence(this.channel);
-    socket.connect();
-    presence.onSync(() => {
-      this.renderOnlineUsers(presence);
-    });
-
-    this.channel
-      .join()
-      .receive("ok", response => {
-        console.log("Joined successfully", response);
-      })
-      .receive("error", resp => {
-        console.log("Unable to join", resp);
-      });
-    this.channel.on("shout", payload => {
-      this.setState({
-        messages: this.state.messages.concat(payload)
-      });
-    });
-  }
-
-  renderOnlineUsers(presence) {
-    const response = [];
+  const renderOnlineUsers = presence => {
+    const onlineUserList = [];
     presence.list((id, { metas: [user, ...rest] }) => {
-      response.push({ username: user.username, typing: user.typing });
+      onlineUserList.push({ username: user.username, typing: user.typing });
     });
-    this.setState({ onlineUsers: response });
-  }
+    setOnlineUsers(onlineUserList);
+  };
 
-  handleInputMessage(event) {
-    this.setState({
-      inputMessage: event.target.value
-    });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.setState({ userTyping: false });
-    this.channel.push("user:typing", {
+  const handleSubmit = inputMessage => {
+    setUserTyping(false);
+    channel.push("user:typing", {
       typing: false,
-      username: this.state.userName
+      username: userName
     });
-    this.channel.push("shout", {
-      name: this.state.userName,
-      body: this.state.inputMessage,
-      channel: this.state.roomName
+    channel.push("shout", {
+      name: userName,
+      body: inputMessage,
+      channel: roomName
     });
-    this.setState({
-      inputMessage: ""
-    });
-  }
+  };
 
-  userStartsTyping() {
-    if (this.state.userTyping) return;
-    this.setState({ userTyping: true });
-    this.channel.push("user:typing", {
+  const userStartsTyping = () => {
+    if (userTyping) return;
+    setUserTyping(true);
+    channel.push("user:typing", {
       typing: true,
-      username: this.state.userName
+      username: userName
     });
-    clearTimeout(this.state.userTypingTimer);
-  }
+    clearTimeout(userTypingTimer);
+  };
 
-  onKeyUp() {
-    clearTimeout(this.state.userTypingTimer);
-    this.setState({
-      userTypingTimer: setTimeout(this.userStopsTyping.bind(this), 2000)
+  const onKeyUp = () => {
+    clearTimeout(userTypingTimer);
+    setTypingTimer(setTimeout(userStopsTyping, 2000));
+  };
+
+  const userStopsTyping = () => {
+    clearTimeout(userTypingTimer);
+    setUserTyping(false);
+    channel.push("user:typing", {
+      typing: false,
+      username: userName
     });
-  }
+  };
 
-  userStopsTyping() {
-    clearTimeout(this.state.userTypingTimer);
-    this.setState({ userTyping: false });
-    this.channel.push("user:typing", {
-      typing: this.state.userTyping,
-      username: this.state.userName
-    });
-  }
-
-  render() {
-    const messages = this.state.messages.map((message, index) => (
-      <div className="message-row" key={index}>
-        <b>{message.name}</b>
-        <span>{message.body}</span>
+  return (
+    <React.Fragment>
+      <RoomLabel roomName={roomName} />
+      <div className="chat-container">
+        <MessageList messages={messages} />
+        <OnlineUserList onlineUsers={onlineUsers} />
       </div>
-    ));
-    return (
-      <React.Fragment>
-        <b id="room-title">
-          Chat room : <span id="room-id">{this.state.roomName}</span>
-        </b>
-        <div className="chat-container">
-          <div id="msg-list">{messages}</div>
-          <div className="online-user-list">
-            <b>Online users :</b>
-            <ul id="js-userList-container">
-              {this.state.onlineUsers.map((user, index) => (
-                <li key={index}>
-                  {user.username}
-                  {user.typing && <b> typing...</b>}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <form id="msg-form" onSubmit={this.handleSubmit.bind(this)}>
-          <input
-            type="text"
-            id="msg-text"
-            className="input"
-            placeholder="Type your message..."
-            autoFocus
-            autoComplete="off"
-            value={this.state.inputMessage}
-            onChange={this.handleInputMessage.bind(this)}
-            onKeyDown={this.userStartsTyping.bind(this)}
-            onKeyUp={this.onKeyUp.bind(this)}
-          />
-          <input type="submit" id="send-btn" className="input" value="Send" />
-        </form>
-      </React.Fragment>
-    );
-  }
-}
+      <MessageForm
+        handleSubmit={handleSubmit}
+        userStartsTyping={userStartsTyping}
+        onKeyUp={onKeyUp}
+      />
+    </React.Fragment>
+  );
+};
+
+Chat.propTypes = {
+  userName: PropTypes.string.isRequired,
+  roomName: PropTypes.string.isRequired,
+  messages: PropTypes.array.isRequired
+};
+
 export default Chat;
