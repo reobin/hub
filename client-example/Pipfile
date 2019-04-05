@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 websockets = "==7.0"
+black = "*"
+asyncio = "*"
 
 [requires]
 python_version = "3.7"
