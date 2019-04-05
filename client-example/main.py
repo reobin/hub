@@ -20,8 +20,13 @@ async def join_a_room():
         await websocket.send(json.dumps(data))
         print(f"> {data}")
 
-        recv = await websocket.recv()
-        print(f"< {recv}")
+        response = await websocket.recv()
+        print(f"< {response}")
+
+        while True:
+            message = json.loads(await websocket.recv())
+            if message["event"] == "shout":
+                print(f"< {message['payload']['body']}")
 
 
 asyncio.get_event_loop().run_until_complete(join_a_room())
