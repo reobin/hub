@@ -7,7 +7,10 @@ import websockets
 import json
 import sys
 
-URL = "wss://guarded-fortress-70241.herokuapp.com/socket/websocket"
+# URL = "wss://guarded-fortress-70241.herokuapp.com/socket/websocket"
+URL = "ws://localhost:4000/socket/websocket"
+
+online_users = []
 
 
 class Prompt:
@@ -32,7 +35,7 @@ async def send_messages(connection, room_name):
         message = {
             "topic": f"room:{room_name}",
             "event": "shout",
-            "payload": {"body": message_body, "channel": room_name, "name": "reobin"},
+            "payload": {"body": message_body, "channel": room_name, "name": "python"},
             "ref": None,
         }
 
@@ -44,24 +47,50 @@ async def create_connection(room_name):
     data = {
         "topic": f"room:{room_name}",
         "event": "phx_join",
-        "payload": {"username": "reobin"},
+        "payload": {"username": "python"},
         "ref": None,
     }
     await connection.send(json.dumps(data))
-    print(f"> {data}")
+    print(f"> connection query")
     return connection
 
 
 async def join_a_room(websocket):
-
     response = await websocket.recv()
-    print(f"< {response}")
+    print(f"< connected")
 
-    async for message_body in websocket:
-        message = json.loads(message_body)
-
+    async for message_data in websocket:
+        message = json.loads(message_data)
         if message["event"] == "shout":
-            print(f"< {message['payload']['body']}")
+            name = message["payload"]["name"]
+            body = message["payload"]["body"]
+            print(f"< {name} says : {body}")
+        elif message["event"] == "presence_diff":
+            manage_presence(message)
+        elif message["event"] == "presence_state":
+            online_users.extend(list(message["payload"].keys()))
+
+
+def manage_presence(message):
+    join_info_keys = list(message["payload"]["joins"].keys())
+    leave_info_keys = list(message["payload"]["leaves"].keys())
+
+    user_joined = True if join_info_keys else False
+
+    if user_joined:
+        username = join_info_keys[0]
+        if join_info_keys[0] in online_users:
+            typing = message["payload"]["joins"][username]["metas"][0]["typing"]
+            typing_message = "is" if typing else "has stopped"
+            print(f"{username} {typing_message} typing")
+        else:
+            online_users.append(join_info_keys[0])
+            print(f"{username} has joined")
+            print(f"Online users: {online_users}")
+    else:
+        username = leave_info_keys[0]
+        online_users.remove(username)
+        print(f"{username} has left")
 
 
 if __name__ == "__main__":
