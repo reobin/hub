@@ -7,8 +7,8 @@ import websockets
 import json
 import sys
 
-# URL = "wss://guarded-fortress-70241.herokuapp.com/socket/websocket"
-URL = "ws://localhost:4000/socket/websocket"
+URL = "wss://guarded-fortress-70241.herokuapp.com/socket/websocket"
+# URL = "ws://localhost:4000/socket/websocket"
 
 online_users = []
 
@@ -28,26 +28,31 @@ class Prompt:
         return (await self.q.get()).rstrip("\n")
 
 
-async def send_messages(connection, room_name):
+async def send_messages(connection, room_name, username):
     prompt = Prompt()
     while True:
         message_body = await prompt()
-        message = {
-            "topic": f"room:{room_name}",
-            "event": "shout",
-            "payload": {"body": message_body, "channel": room_name, "name": "python"},
-            "ref": None,
-        }
+        if message_body:
+            message = {
+                "topic": f"room:{room_name}",
+                "event": "shout",
+                "payload": {
+                    "body": message_body,
+                    "channel": room_name,
+                    "name": username,
+                },
+                "ref": None,
+            }
 
-        await connection.send(json.dumps(message))
+            await connection.send(json.dumps(message))
 
 
-async def create_connection(room_name):
+async def create_connection(room_name, username):
     connection = await websockets.connect(URL)
     data = {
         "topic": f"room:{room_name}",
         "event": "phx_join",
-        "payload": {"username": "python"},
+        "payload": {"username": username},
         "ref": None,
     }
     await connection.send(json.dumps(data))
@@ -95,10 +100,16 @@ def manage_presence(message):
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    room_name = sys.argv[1]
-    connection = loop.run_until_complete(create_connection(room_name))
+
+    print("Enter your name:")
+    username = input() or "guest"
+
+    print("Chat room you wish to join:")
+    room_name = input() or "lobby"
+
+    connection = loop.run_until_complete(create_connection(room_name, username))
 
     asyncio.ensure_future(join_a_room(connection))
-    asyncio.ensure_future(send_messages(connection, room_name))
+    asyncio.ensure_future(send_messages(connection, room_name, username))
     loop.run_forever()
 
