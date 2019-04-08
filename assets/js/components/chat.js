@@ -83,6 +83,7 @@ const Chat = ({ userName, roomName, messages: messagesProp }) => {
   };
 
   const userStopsTyping = () => {
+    if (!userTyping) return;
     clearTimeout(userTypingTimer);
     setUserTyping(false);
     channel.push("user:typing", {
