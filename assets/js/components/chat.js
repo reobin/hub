@@ -58,11 +58,13 @@ const Chat = ({ userName, roomName, messages: messagesProp }) => {
       typing: false,
       username: userName
     });
-    channel.push("shout", {
-      name: userName,
-      body: inputMessage,
-      channel: roomName
-    });
+    if (inputMessage) {
+      channel.push("shout", {
+        name: userName,
+        body: inputMessage,
+        channel: roomName
+      });
+    }
   };
 
   const userStartsTyping = () => {
