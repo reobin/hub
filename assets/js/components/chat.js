@@ -14,35 +14,27 @@ const Chat = ({ userName, roomName, messages: messagesProp }) => {
   const [channel, setChannel] = useState({});
 
   useEffect(() => {
+    const setupChannel = () => {
+      const socket = new Socket("/socket", {});
+      const socketChannel = socket.channel(`room:${roomName}`, {
+        username: userName
+      });
+      const presence = new Presence(socketChannel);
+      socket.connect();
+      presence.onSync(() => {
+        renderOnlineUsers(presence);
+      });
+      socketChannel.join().receive("ok", response => {
+        console.log("Joined successfully", response);
+      });
+      socketChannel.on("shout", message => {
+        setMessages(prevMessages => [...prevMessages, message]);
+      });
+      setChannel(socketChannel);
+    };
+
     setupChannel();
   }, []);
-
-  const setupChannel = async () => {
-    const socket = new Socket("/socket", {});
-
-    const socketChannel = socket.channel(`room:${roomName}`, {
-      username: userName
-    });
-
-    const presence = new Presence(socketChannel);
-    socket.connect();
-    presence.onSync(() => {
-      renderOnlineUsers(presence);
-    });
-
-    socketChannel
-      .join()
-      .receive("ok", response => {
-        console.log("Joined successfully", response);
-      })
-      .receive("error", resp => {
-        console.log("Unable to join", resp);
-      });
-    socketChannel.on("shout", message => {
-      setMessages(prevMessages => [...prevMessages, message]);
-    });
-    setChannel(socketChannel);
-  };
 
   const renderOnlineUsers = presence => {
     const onlineUserList = [];
