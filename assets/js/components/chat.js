@@ -59,29 +59,28 @@ const Chat = ({ userName, roomName, messages: messagesProp }) => {
     }
   };
 
-  const userStartsTyping = () => {
-    if (userTyping || !channel) return;
-    setUserTyping(true);
-    channel.push("user:typing", {
-      typing: true,
-      username: userName
-    });
-    clearTimeout(userTypingTimer);
-  };
-
   const onKeyUp = () => {
     clearTimeout(userTypingTimer);
     setTypingTimer(setTimeout(userStopsTyping, 2000));
   };
 
+  const userStartsTyping = () => {
+    if (userTyping || !channel) return;
+    pushTypingInfo(true);
+  };
+
   const userStopsTyping = () => {
     if (!userTyping) return;
-    clearTimeout(userTypingTimer);
-    setUserTyping(false);
+    pushTypingInfo(false);
+  };
+
+  const pushTypingInfo = typing => {
+    setUserTyping(typing);
     channel.push("user:typing", {
-      typing: false,
+      typing: typing,
       username: userName
     });
+    clearTimeout(userTypingTimer);
   };
 
   return (
