@@ -66,13 +66,13 @@ To open a connection and thus, joining a chat room, you first need the user's na
 As said above, the server responds to JSON. The message we send to connect should look like this.
 ```json
 {
-  topic: "room:lobby",
-  event: "phx_join",
-  payload: 
+  "topic": "room:lobby",
+  "event": "phx_join",
+  "payload": 
   {
-    username: "robin"
+    "username": "robin"
   },
-  ref: null,
+  "ref": null,
 }
 ```
 
@@ -101,14 +101,14 @@ connection.send(json.dumps(data))
 Receiving a response at all means the connection was successfull, but just the the records, here's what the answer looks like.
 ```json
 {
-  topic: "room:lobby",
-  event: "phx_reply",
-  payload: 
+  "topic": "room:lobby",
+  "event": "phx_reply",
+  "payload": 
   {
-    response: {},
-    status: "ok"
+    "response": {},
+    "status": "ok"
   },
-  ref: null,
+  "ref": null,
 }
 ```
 
@@ -119,25 +119,25 @@ Congratulations, you're connected!
 Right after receiving a response confirming that the connection was successfull, the server sends a second message with the ``event`` tag set to ``presence_state`` containing more useful information. It goes like this.
 ```json
 {
-  topic: "room:lobby",
-  event: "presence_state",
-  payload: 
+  "topic": "room:lobby",
+  "event": "presence_state",
+  "payload": 
   {
-    robin:
+    "robin":
     {
-      metas:
+      "metas":
       [
         {
-          phx_ref:"cSvOUT1SLRM=",
-          phx_ref_prev:"QIy9RaBWFhE=",
-          typing:false,
-          username:"robin"
+          "phx_ref": "cSvOUT1SLRM=",
+          "phx_ref_prev": "QIy9RaBWFhE=",
+          "typing": false,
+          "username" :"robin"
         }
       ]
     },
-    robin2:{metas:[{phx_ref:"ya1DVM0S290=",typing:false,username:"robin2"}]}
+    "robin2": {"metas": [{"phx_ref": "ya1DVM0S290=", "typing": false, "username": "robin2"}]}
   }
-]
+}
 ```
 
 I left the second user, robin, on one line for clarity.
@@ -154,13 +154,13 @@ This creates a list of string containing the users names.
 When the message topic is set to ``shout``, this means someone wrote a message to the chat room you're connected to. This what a ``shout`` looks like.
 ```json
 {
-  topic: "room:chat",
-  event: "shout",
-  payload:
+  "topic": "room:chat",
+  "event": "shout",
+  "payload":
   {
-    body:"hey",
-    channel:"lobby",
-    name:"robin"
+    "body": "hey",
+    "channel": "lobby",
+    "name": "robin"
   }
 }
 ```
@@ -225,25 +225,25 @@ Let's start with when a user joins.
 The message sent by the server when a user joins is the following.
 ```json
 {
-  topic: "room:lobby",
-  event: "presence_diff",
-  payload: 
+  "topic": "room:lobby",
+  "event": "presence_diff",
+  "payload": 
   {
-    joins:
+    "joins":
     {
-      robin:
+      "robin":
       {
-        metas:
+        "metas":
         [
           {
-            phx_ref: "3739c+OnWg4=",
-            typing: false,
-            username: "robin"
+            "phx_ref": "3739c+OnWg4=",
+            "typing": false,
+            "username": "robin"
           }
         ]
       }
     },
-    leaves:{}
+    "leaves": {}
   }
 }
 ```
@@ -263,21 +263,21 @@ Knowing that, you should keep a list of online users on your client. When you re
 The event sent when a user leaves is almost copied to the one sent when a user joins. The difference is that all the data is inside the ``leaves`` object, instead of the ``joins`` object.
 ```json
 {
-  topic: "room:lobby",
-  event: "presence_diff",
-  payload: 
+  "topic": "room:lobby",
+  "event": "presence_diff",
+  "payload": 
   {
-    joins: {},
-    leaves: 
+    "joins": {},
+    "leaves": 
     {
-      robin:
+      "robin":
       {
-        metas:
+        "metas":
         [
           {
-            phx_ref: "3739c+OnWg4=",
-            typing: false,
-            username: "robin"
+            "phx_ref": "3739c+OnWg4=",
+            "typing": false,
+            "username": "robin"
           }
         ]
       },
@@ -343,33 +343,33 @@ the "user has connected" event. The difference is that both ``joins`` and
 ``typing`` set to ``True``, while the other has it set to ``False``.
 ```json
 {
-  topic: "room:lobby",
-  event: "presence_diff",
-  payload: 
+  "topic": "room:lobby",
+  "event": "presence_diff",
+  "payload": 
   {
-    joins: {
-      robin:
+    "joins": {
+      "robin":
       {
-        metas:
+        "metas":
         [
           {
-            phx_ref: "hFTdWydp4YA",
-            typing: true,
-            username: "robin"
+            "phx_ref": "hFTdWydp4YA",
+            "typing": true,
+            "username": "robin"
           }
         ]
       },
     },
-    leaves: 
+    "leaves": 
     {
-      robin:
+      "robin":
       {
-        metas:
+        "metas":
         [
           {
-            phx_ref: "3739c+OnWg4=",
-            typing: false,
-            username: "robin"
+            "phx_ref": "3739c+OnWg4=",
+            "typing": false,
+            "username": "robin"
           }
         ]
       },
@@ -419,15 +419,15 @@ To send a message to a chat room, here is the JSON object you need to send.
 
 ```json
 {
-  topic: "room:lobby",
-  event: "shout",
-  payload: 
+  "topic": "room:lobby",
+  "event": "shout",
+  "payload": 
   {
-    body: "hello world",
-    channel: "lobby",
-    name: "robin"
+    "body": "hello world",
+    "channel": "lobby",
+    "name": "robin"
   },
-  ref: null
+  "ref": null
 }
 ```
 - ``body`` the message body
